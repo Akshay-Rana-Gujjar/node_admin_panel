@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>iofrm</title>
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" type="text/css" href="css/iofrm-style.css">
+        <link rel="stylesheet" type="text/css" href="css/iofrm-theme9.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <style>.form-group, .form-control{margin-top:1%;}
+			.radio-inline{margin-left:1%;margin-right:1%;}
+		</style>
+    </head>
+    <body>
+        <div class="form-body" class="container-fluid">
+            <div class="row">
+                <div class="img-holder">
+                    <div class="bg"></div>
+                    <div class="info-holder">
+                        <h3>Get more things done with Loggin platform.</h3>
+                        <p>Access to the most powerfull tool in the entire design and web industry.</p>
+                        <img src="images/graphic5.svg" alt="">
+                    </div>
+                </div>
+                <div class="form-holder">
+                    <div class="form-content">
+                        <div class="form-items">
+                            <div class="website-logo-inside">
+                                <a href="index.html">
+                                    <div class="logo">
+                                        <img class="logo-size" src="images/logo-light.svg" alt="">
+                                    </div>
+                                </a>
+                            </div>
+                            
+                            <form method="post"  action="/submit" id="api">
+								<select class="form-control" name="cabin_class" id="cabin_class">
+									<option>-- Select --</option>
+									<option value="1">
+									Business Class
+									</option>
+									<option value="2">
+									Economic Class
+									</option>
+								</select>
+								<div class="form-button">
+                                    <div data-toggle="modal" data-target="#amenities" ><span class="ibtn">AMENITIES</span></div>
+                                </div>
+                                <input class="form-control" type="text" name="baggage" placeholder="Baggage" id="baggage" required>
+								<input class="form-control" type="text" name="cancellation_policy" placeholder="Cancellation Policy" id="cancellation_policy" >
+                                <div class="form-button">
+                                    <div data-toggle="modal" data-target="#job_modal" ><span class="ibtn">ADD DEALS</span></div>
+                                </div>
+								
+								<input class="form-control" type="text" name="desc" placeholder="Description" id="desc" >
+								
+								<div class="form-button">
+                                    <div data-toggle="modal" data-target="#flight_carrier" ><span class="ibtn">Flight Carrier</span></div>
+                                </div>
+								<input class="form-control" type="text" name="flight_name" placeholder="Flight Name" id="flight_name" required>
+								
+								<input class="form-control" type="text" name="flight_type" placeholder="Flight Type" id="flight_type" required>
+								
+								<input class="form-control" type="text" name="flight_id" placeholder="Flight Id" id="flight_id" required>
+								
+								<div class="form-button">
+                                    <div data-toggle="modal" data-target="#images_modal" ><span class="ibtn">Add Images</span></div>
+                                </div>
+								
+								<input class="form-control" type="text" name="morning_shift" placeholder="Morning Shift" id="morning_shift" required>
+								
+								<input class="form-control" type="text" name="rating" placeholder="Rating" id="rating" required>
+								
+								
+                                <div class="form-button">
+                                    <button id="submit" type="submit" class="ibtn">Submit</button>
+                                </div>
+                            </form>
+                            <div class="form-button">
+                                <div data-toggle="modal" data-target="#list_flights" ><span class="ibtn">List all flights</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container" style="z-index:9999;position:absolute;margin-top:40%;" >
+            <table class="table table-striped" id="table-jobs">
+                <thead>
+                    <tr>
+                        <th>flight_deal</th>
+                        <th>id</th>
+                        <th>stop_landing_airport</th>
+                        <th>stop_landing_date</th>
+                        <th>stop_no</th>
+                        <th>stop_place</th>
+
+                    </tr>
+                </thead>
+                <tbody id="jobs_submitted">
+                </tbody>
+            </table>
+        </div>
+        <div class="container" style="z-index:9999;margin-top:70%;" >
+            <table class="table table-striped" id="table-images">
+                <thead>
+                    <tr>
+                        <th>flight_image</th>
+                        <th>flight_image_id</th>
+                        <th>image_type</th>
+                        <th>image_url</th>
+
+                    </tr>
+                </thead>
+                <tbody id="flight_images">
+                </tbody>
+            </table>
+        </div>
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/popper.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
+        <script type="text/javascript" src="js/needy.js"></script> 
+        <script type="text/javascript" src="js/list.js"></script>     
+        
+        <div id="list_flights" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;z-index:9999;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="form-button"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button></div>
+                        <h5 class="modal-title">List Flights</h5>
+                    </div>
+                    <div class="modal-body">
+                        <% var i=0; %>
+                                <% for(var carrier of data) {  i++;%>
+                                    <h4 class="box-title" id="list_id" onclick="getId(this)"><%= carrier %></h4>
+                                <% } %>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="job_modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;z-index:9999;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="form-button"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button></div>
+                        <h5 class="modal-title">Add Deals</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-inline" id="form-jobdetail" method="post">
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    <input class="form-control" type="number" id="adults" name="adults" placeholder="No.of Adults" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    <input class="form-control" type="text" id="cancellation_charges" name="cancellation_charges" placeholder="Cancellation Charges" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    <input class="form-control" type="number" id="children" name="children" placeholder="No.of Childern" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    <input class="form-control" type="text" id="depart_airport" name="depart_airport" placeholder="Departure Airport" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    <input class="form-control" type="text" id="depart_date" name="depart_date" placeholder="Departure Date" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    <input class="form-control" type="text" id="depart_from_city" name="depart_from_city" placeholder="Departure City" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    <input class="form-control" type="text" id="featured_deal" name="featured_deal" placeholder="Featured Deal" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    <input class="form-control" type="text" id="flight" name="flight" placeholder="Flight" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    <input class="form-control" type="text" id="flight_deal_url" name="flight_deal_url" placeholder="Flight Deal Url" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    <input class="form-control" type="text" id="deal_id" name="deal_id" placeholder="Deal Id" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    <input class="form-control" type="text" id="international" name="international" placeholder="International" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    <input class="form-control" type="text" id="is_partner" name="is_partner" placeholder="Is Partner ?" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    <input class="form-control" type="text" id="journey_duration" name="journey_duration" placeholder="Journey Duration" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    <input class="form-control" type="text" id="land_to_city" name="land_to_city" placeholder="Arrival City" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    <input class="form-control" type="text" id="landing_airport" name="landing_airport" placeholder="Arrival Airport" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    <input class="form-control" type="number" id="no_of_stops" name="no_of_stops" placeholder="No.of Stops" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    <input class="form-control" type="text" id="return_date" name="return_date" placeholder="Return Date" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <input class="form-control" type="hidden"  placeholder="Return Date">
+                                </div>
+                            </div>
+                            <div class="col-lg-12" style="margin-top:1%;">
+                                <label>Add Stop (* if applicable)</label>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    <input class="form-control" type="text" id="flight_deal" name="flight_deal" placeholder="Flight Deal Id" >
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    <input class="form-control" type="text" id="stop_id" name="stop_id" placeholder="Stop Id" >
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    <input class="form-control" type="text" id="stop_landing_airport" name="stop_landing_airport" placeholder="Stop Landing Airport" >
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    <input class="form-control" type="text" id="stop_landing_date" name="stop_landing_date" placeholder="Stop Landing Date" >
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    <input class="form-control" type="text" id="stop_no" name="stop_no" placeholder="Stop Number" >
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    <input class="form-control" type="text" id="stop_place" name="stop_place" placeholder="Stop Place" >
+                                </div>
+                            </div>
+                            <div class="col-lg-12" style="margin-top:1%;">
+                                <input type="button" class="btn btn-default" value ="Add Stop" id="addstop">
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    <input class="form-control" type="text" id="total_fare" name="total_fare" placeholder="Total fare" >
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    <input class="form-control" type="number" id="trip_type" name="trip_type" placeholder="Trip Type" >
+                                </div>
+                            </div>
+                            <div class="col-lg-12" style="margin-top:1%;">
+                                <label>Add Website (* required)</label>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    <input class="form-control" type="text" id="website_id" name="website_id" placeholder="Website Id" >
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    <input class="form-control" type="text" id="logo_image" name="logo_image" placeholder="Logo Image" >
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    <input class="form-control" type="text" id="website_name" name="website_name" placeholder="Website Name" >
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    <input class="form-control" type="text" id="website_url" name="website_url" placeholder="Website URL" >
+                                </div>
+                            </div>
+                            <div class="col-lg-6 form-button"style="margin-top:1%">
+                                <input type='button' class="btn btn-primay" value='Add Website' id='addwebsite'>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12" style="margin-top:1%;">
+                                    <button type="submit" class="btn btn-success">Add Deals</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+		
+        <div id="amenities" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;">
+            <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                             <div class="form-button"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button></div>
+            
+                                <h5 class="modal-title">Add Amenities</h5>
+                        </div>
+            <div class="modal-body">
+                <form class="form-inline" id="amenities_form" method="post">
+                       	   			
+									<label class="radio-inline">Exclusive Check In Facility:</label>
+                        			<label class="radio-inline"><input type="radio" id="Exclusive_check_in_facility" name="Exclusive_check_in_facility" value="true" >true</label>
+									<label class="radio-inline"><input type="radio" id="Exclusive_check_in_facility" name="Exclusive_check_in_facility" value="false">false</label>
+									
+					
+									<label class="radio-inline"> | Spacious Cabin:</label>
+									<label class="radio-inline"><input type="radio" id="Spacious_cabins" value="true" name="Spacious_cabins" >true</label>
+									<label class="radio-inline"><input type="radio" id="Spacious_cabins" name="Spacious_cabins" value="false">false</label><br>
+                            
+						
+                            		<label class="radio-inline"> | Baggage Allowance:</label>
+                                    <label class="radio-inline"><input type="radio" id="baggage_allowance" name="baggage_allowance" value="true" >true</label>
+						            <label class="radio-inline"><input type="radio" id="baggage_allowance" name="baggage_allowance" value="false">false</label>
+                        	
+									<label class="radio-inline"> | Cocktails:</label>
+                                    <label class="radio-inline"><input type="radio" id="cocktails" name="cocktails" value="true" >true</label>
+					                <label class="radio-inline"><input type="radio" id="cocktails" name="cocktails" value="false">false</label>
+                    		
+									<label class="radio-inline"> | Direct Tv:</label>
+                                    <label class="radio-inline"><input type="radio" id="direc_tv" name="direc_tv" value="true" >true</label>
+					                <label class="radio-inline"><input type="radio" id="direc_tv" name="direc_tv" value="false">false</label>
+									
+									<div class="form-group">
+										<div class="col-md-10">
+											<input class="form-control" type="text" id="am_flight" name="am_flight" placeholder="Flight" >
+										</div>
+                            		</div>
+									<div class="form-group">
+										<div class="col-md-10">
+											<input class="form-control" type="text" id="am_id" name="am_id" placeholder="Id" >
+										</div>
+                            		</div>
+							
+									<label class="radio-inline"> | InFlight Magazine:</label>
+                                    <label class="radio-inline"><input type="radio" id="inflight_magazine" name="inflight_magazine" value="true" >true</label>
+					                <label class="radio-inline"><input type="radio" id="inflight_magazine" name="inflight_magazine" value="false">false</label>
+					
+									<label class="radio-inline"> | Liquor:</label>
+                                    <label class="radio-inline"><input type="radio" id="liquor" name="liquor" value="true" >true</label>
+					                <label class="radio-inline"><input type="radio" id="liquor" name="liquor" value="false">false</label>
+								
+					
+									<label class="radio-inline"> | Lounge Facility:</label>
+                                    <label class="radio-inline"><input type="radio" id="lounge_facility" name="lounge_facility" value="true" >true</label>
+					                <label class="radio-inline"><input type="radio" id="lounge_facility" name="lounge_facility" value="false">false</label>
+									
+									
+									<div class="form-group">
+										<div class="col-md-10">
+											<input class="form-control" type="number" id="no_of_breakfast" name="no_of_breakfast" placeholder="No Of Breakfast" >
+										</div>
+                            		</div>
+									<div class="form-group">
+										<div class="col-md-10">
+											<input class="form-control" type="number" id="no_of_dinner" name="no_of_dinner" placeholder="No Of Dinner" >
+										</div>
+                            		</div>
+									<div class="form-group">
+										<div class="col-md-10">
+											<input class="form-control" type="number" id="no_of_lunch" name="no_of_lunch" placeholder="No Of Lunch" >
+										</div>
+                            		</div>
+									
+									
+									<label class="radio-inline"> | Plush Seats:</label>
+                                    <label class="radio-inline"><input type="radio" id="plush_seats" name="plush_seats" value="true" >true</label>
+					                <label class="radio-inline"><input type="radio" id="plush_seats" name="plush_seats" value="false">false</label>
+									
+									<label class="radio-inline"> | Private Screening:</label>
+                                    <label class="radio-inline"><input type="radio" id="private_screening" name="private_screening" value="true" >true</label>
+					                <label class="radio-inline"><input type="radio" id="private_screening" name="private_screening" value="false">false</label>
+					
+									<label class="radio-inline"> | Slippers:</label>
+                                    <label class="radio-inline"><input type="radio" id="slippers" name="slippers" value="true" >true</label>
+					                <label class="radio-inline"><input type="radio" id="slippers" name="slippers" value="false">false</label>
+									
+									<label class="radio-inline"> | WIFI:</label>
+                                    <label class="radio-inline"><input type="radio" id="wifi" name="wifi" value="true" >true</label>
+					                <label class="radio-inline"><input type="radio" id="wifi" name="wifi" value="false">false</label>
+									<p></p>
+									<label class="radio-inline"> | Window Seat:</label>
+                                    <label class="radio-inline"><input type="radio" id="window_seat" name="window_seat" value="true" >true</label>
+					                <label class="radio-inline"><input type="radio" id="window_seat" name="window_seat" value="false">false</label>
+                    		
+												
+            
+            
+                    <div class="row">
+                            <div class="col-lg-6">
+                                <button type="submit" class="btn btn-success">Add Amenities</button>
+                            </div>  
+                        
+                    </div>
+               </form>
+            </div>
+                         <div class="modal-footer"></div></div></div></div>
+   
+		<div id="flight_carrier" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;">
+            <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                             <div class="form-button"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button></div>
+            
+                                <h5 class="modal-title">Flight Carrier</h5>
+                        </div>
+            <div class="modal-body">
+                <form class="form-inline" id="flight_carrier_form" method="post">
+                       	   			
+									
+									<div class="form-group">
+										<div class="col-md-10">
+											<input class="form-control" type="text" id="flight_carrier_desc" name="flight_carrier_desc" placeholder="Flight Carrier Desc" >
+										</div>
+                            		</div>
+									<div class="form-group">
+										<div class="col-md-10">
+											<input class="form-control" type="text" id="flight_carrier_logo" name="flight_carrier_logo" placeholder="Flight Carrier Logo" >
+										</div>
+                            		</div>
+									<div class="form-group">
+										<div class="col-md-10">
+											<input class="form-control" type="text" id="flight_carrier_name" name="flight_carrier_name" placeholder="Flight Carrier Name" >
+										</div>
+                            		</div>
+									<div class="form-group">
+										<div class="col-md-10">
+											<input class="form-control" type="text" id="flight_carrier_website" name="flight_carrier_website" placeholder="Flight Carrier Website" >
+										</div>
+                            		</div>
+									<div class="form-group">
+										<div class="col-md-10">
+											<input class="form-control" type="text" id="f_c_id" name="f_c_id" placeholder="Id" >
+										</div>
+                            		</div>
+								
+                    		
+												
+            
+            
+                    <div class="row">
+                            <div class="col-lg-12">
+                                <button type="submit" class="btn btn-success">Add Flight Carrier</button>
+                            </div>  
+                        
+                    </div>
+               </form>
+            </div>
+                         <div class="modal-footer"></div></div></div></div>
+   		
+		<div id="images_modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;">
+            <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                             <div class="form-button"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button></div>
+            
+                                <h5 class="modal-title">Add Image</h5>
+                        </div>
+            <div class="modal-body">
+                <form class="form-inline" id="images_form" method="post" enctype="multipart/form-data">
+                       	   			
+									
+									<div class="form-group">
+										<div class="col-md-10">
+											<input class="form-control" type="text" id="flight_image" name="flight_image" placeholder="Flight" >
+										</div>
+                            		</div>
+									<div class="form-group">
+										<div class="col-md-10">
+											<input class="form-control" type="text" id="flight_image_id" name="flight_image_id" placeholder="Id" >
+										</div>
+                            		</div>
+									<div class="form-group">
+										<div class="col-md-10">
+											<input class="form-control" type="text" id="image_type" name="image_type" placeholder="Image Type" >
+										</div>
+                            		</div>
+									<div class="form-group">
+										<div class="col-md-10">
+											<input class="form-control" type="text" id="image_url" name="image_url" placeholder="Image URL" >
+										</div>
+                            		</div>
+									
+								
+                    		
+												
+            
+            
+                    <div class="row" style="margin-top:1%;">
+                            <div class="col-lg-12">
+                                <button type="submit" class="btn btn-success">Add Flight Carrier</button>
+                            </div>  
+                        
+                    </div>
+               </form>
+            </div>
+                         <div class="modal-footer"></div></div></div></div>
+   		
+		
+	</body>
+</html>

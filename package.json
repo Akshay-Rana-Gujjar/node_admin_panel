@@ -1,0 +1,20 @@
+{
+  "name": "nodekb",
+  "version": "1.0.0",
+  "description": "Simple KB app",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app"
+  },
+  "author": "Nitn\u001b[Di\u001b[C\u001b[Dn",
+  "license": "ISC",
+  "dependencies": {
+    "bunyan": "^1.8.12",
+    "body-parser": "^1.18.3",
+    "consolidate": "^0.15.1",
+    "ejs": "^1.0.0",
+    "express": "^4.16.3",
+    "request": "^2.88.0",
+    "swig": "^1.4.2"
+  }
+}
